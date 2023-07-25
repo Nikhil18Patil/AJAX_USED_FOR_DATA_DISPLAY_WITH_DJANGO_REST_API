@@ -32,3 +32,35 @@ function displayData(data) {
         dataContainer.appendChild(itemElement);
     }
 }
+
+document.getElementById("fetchSpecificDataBtn").addEventListener("click", function() {
+    // Get the input name from the HTML and remove leading/trailing spaces
+    var inputName = document.getElementById("nameInput").value.trim();
+
+    // Send an AJAX request to fetch the data for the specific name
+    $.ajax({
+        type: "GET",
+        url: "/fetch_data/",
+        dataType: "json",
+        success: function(responseData) {
+            // Filter the data by the input name (case insensitive)
+            var specificNameData = responseData.filter(function(item) {
+                return item.name.toLowerCase() === inputName.toLowerCase();
+            });
+
+            // Display the filtered data on the web page
+            displayData(specificNameData);
+        },
+        error: function(xhr, status, error) {
+            console.error("Request failed. Status: " + xhr.status);
+        }
+    });
+});
+
+// Function to display the fetched data on the web page
+
+
+
+function my(){
+    $("#dataContainer").toggle();
+}
